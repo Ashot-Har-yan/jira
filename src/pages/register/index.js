@@ -1,83 +1,90 @@
-import React from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import{ Form, Button, Input } from 'antd';
-import { auth } from "../../services/firbase"; 
-import "./index.css"
+import { useState } from 'react';
+import { Form, Button, Input } from 'antd';
+import './index.css';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../services/firebase';
+import { regexpValidation } from '../../core/utils/constants';
 
-class Register extends React.Component{
-        constructor(){
-            super();
-            this.state={
-                firstName:"",
-                lastName:"",
-                email:"",
-                password:"",
-                loading:false
-            }
+const Register = ()=>{
+    const [loading,setLoading] = useState(false);
+    const [form] = Form.useForm()
+
+    const handleRegister = async values=>{
+        setLoading(true)
+        const {email,password} = values;
+        try{
+            await createUserWithEmailAndPassword(auth,email,password)
+        }catch (e){
+            console.log(e)
+        }finally{
+            setLoading(false)
         }
-
-        handleChangeInput=e=>{
-            const {name,value} = e.target;
-            this.setState({
-                [name]:value
-            });
-        }
-
-        handleRegister = async e=>{
-            e.preventDefault();
-            this.setState({
-                loading:true
-            });
-
-            const {email,password} =this.state;
-          try{
-            await createUserWithEmailAndPassword(auth,email,password);
-          }catch{
-            console.log('error')
-          }finally{
-            this.setState({
-                loading:false
-            })
-          }
-           
-        }
-
-    render(){
-        const{loading} = this.state
-        return(
-
-            <div className="auth_container">
-
-            <Form layout="vertical">
-
-                <Form.Item label htmlFor="First Name">
-                    <p>First</p>
-                    <Input name="firstName" type="text" placeholder="First Name" onChange = {this.handleChangeInput}/>
+    }
+    return(
+        <div className='auth_container'>
+            <Form layout='vertical' form={form} onFinish={handleRegister}>
+                <Form.Item 
+                label ='First Name' 
+                name='FirstName'
+                rules={[
+                    {
+                        required:true,
+                        message:"Please input your First Name"
+                    }
+                ]}
+                >
+                <Input type = 'text' placeholder='First Name' />
+                </Form.Item>
+            
+                <Form.Item 
+                label ='Last Name'
+                 name='LastName'
+                 rules={[
+                    {
+                        required:true,
+                        message:"Please input your Last Name"
+                    }
+                ]}
+                 >
+                <Input type = 'text' placeholder='Last Name' />
                 </Form.Item>
 
-                <Form.Item htmlFor="Last Name">
-                    <p>Last</p>
-                    <Input name="lastName" type="text" placeholder="Last Name" onChange = {this.handleChangeInput}/>
+                <Form.Item
+                 label ='Email'
+                  name='email'
+                  rules={[
+                    {
+                        required:true,
+                        message:"Please input your Email"
+                    }
+                ]}
+                  >
+                <Input type = 'email' placeholder='Email' />
                 </Form.Item>
 
-                <Form.Item htmlFor="email">
-                    <p>Email</p>
-                    <Input name="email" type="email" placeholder="Email " onChange = {this.handleChangeInput}/>
+                <Form.Item
+                 label ='Password'
+                  name='password'
+                  rules={[
+                    {
+                        required:true,
+                        message:"Please input your password"
+                    },
+                    {
+                        pattern: regexpValidation,
+                        message:'Wrong password'
+                    }
+                ]}
+                  >
+                <Input.Password placeholder='Password' />
                 </Form.Item>
-
-                <Form.Item htmlFor="password">
-                    <p>Password</p>
-                    <Input.Password name="password" type="password" placeholder="Password" onChange = {this.handleChangeInput}/>
-                </Form.Item>
-
-                
-                <Button onClick={this.handleRegister} type="primary" loading={loading}>Register</Button>
+                <Button type ='primary' htmlType='submit' loading = {loading}>
+                    Sign in
+                </Button>
             </Form>
              
         </div>
-        )
-    }
+    )
 }
-
 
 export default Register
