@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import { Form, Button, Input } from 'antd';
 import './index.css';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
