@@ -2,7 +2,8 @@ import React,{ useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../services/firebase';
-import { regexpValidation } from '../../core/utils/constants';
+import { ROUTE_CONSTANTS } from '../../core/utils/constants';
+import { Link } from 'react-router-dom';
 
 const Login = ()=>{
     const [loading,setLoading] = useState(false)
@@ -10,16 +11,15 @@ const Login = ()=>{
   const [ form ] = Form.useForm();
 
   const handleLogin =  async values => {
-console.log(values,'>>>>>>')
     setLoading(true)
 
     try{
         const { email,password} = values;
-        const response = await signInWithEmailAndPassword(auth,email,password);
+         await signInWithEmailAndPassword(auth,email,password);
         form.resetFields();
 
-    }catch{
-        console.error()
+    }catch(error){
+        console.log(error)
     }finally{
         setLoading(false)
     }
@@ -49,10 +49,6 @@ console.log(values,'>>>>>>')
                 {
                     required:true,
                     message:"Please input your password"
-                },
-                {
-                    pattern:regexpValidation,
-                    message:'Wrong password'
                 }
             ]}
         >
@@ -62,6 +58,10 @@ console.log(values,'>>>>>>')
             <Button type = "primary" htmlType='submit' loading = {loading}>
                 Sign in
             </Button>
+
+            <Link to = {ROUTE_CONSTANTS.REGISTER}>
+                Sign up
+            </Link>
            </Form>
 
         </div>

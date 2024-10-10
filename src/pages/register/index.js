@@ -1,21 +1,24 @@
 import React,{ useState } from 'react';
-import { Form, Button, Input } from 'antd';
-import './index.css';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { Form, Button, Input } from 'antd';
 import { auth } from '../../services/firebase';
-import { regexpValidation } from '../../core/utils/constants';
+import { regexpValidation,ROUTE_CONSTANTS } from '../../core/utils/constants';
+import { Link, useNavigate } from 'react-router-dom';
+import './index.css';
 
 const Register = ()=>{
     const [loading,setLoading] = useState(false);
     const [form] = Form.useForm()
+    const navigate = useNavigate();
 
-    const handleRegister = async values=>{
+    const handleRegister = async values => {
         setLoading(true)
         const {email,password} = values;
         try{
             await createUserWithEmailAndPassword(auth,email,password)
-        }catch (e){
-            console.log(e)
+            navigate(ROUTE_CONSTANTS.LOGIN)
+        }catch(error){
+            console.log(error)
         }finally{
             setLoading(false)
         }
@@ -25,7 +28,7 @@ const Register = ()=>{
             <Form layout='vertical' form={form} onFinish={handleRegister}>
                 <Form.Item 
                 label ='First Name' 
-                name='FirstName'
+                name='firstName'
                 rules={[
                     {
                         required:true,
@@ -38,7 +41,7 @@ const Register = ()=>{
             
                 <Form.Item 
                 label ='Last Name'
-                 name='LastName'
+                 name='lastName'
                  rules={[
                     {
                         required:true,
@@ -79,12 +82,15 @@ const Register = ()=>{
                 <Input.Password placeholder='Password' />
                 </Form.Item>
                 <Button type ='primary' htmlType='submit' loading = {loading}>
-                    Sign in
+                    Sign up
                 </Button>
+                <Link to = {ROUTE_CONSTANTS.LOGIN}>
+                    Sign in
+                </Link>
             </Form>
              
         </div>
     )
 }
 
-export default Register
+export default Register;
