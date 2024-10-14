@@ -1,5 +1,5 @@
-import Register from './pages/register'
-import Login from './pages/login';
+import { Login, Register } from "./pages/auth";
+import React from "react";
 import MainLayout from "./components/layouts/main"
 import { RouterProvider,createBrowserRouter,createRoutesFromElements,Route } from 'react-router-dom';
 import { ROUTE_CONSTANTS } from './core/utils/constants';

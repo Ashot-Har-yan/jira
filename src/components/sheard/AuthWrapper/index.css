@@ -1,0 +1,19 @@
+.auth_wrapper{
+    max-width:800px;
+    display: grid;
+    grid-template-columns:repeat(2,1fr);
+    margin: 10px auto;
+}
+
+.banner_container{
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-size: cover;
+    background-position: center;
+}
+.form_container{
+    border:1px solid rgba(221,220,220,.92);
+    border-bottom-right-radius: 12px;
+    border-top-right-radius:12px ;
+    padding: 12px;
+}
