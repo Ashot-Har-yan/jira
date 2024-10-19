@@ -10,6 +10,7 @@ const AuthWrapper = ({title,banner,children})=>{
                 <Title level ={3}>
                     {title}
                 </Title>
+                
                 {children}
             </div>
         </div>
