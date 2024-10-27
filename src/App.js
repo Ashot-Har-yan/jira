@@ -4,7 +4,7 @@ import MainLayout from "./components/layouts/main";
 import CabinetLayout from "./components/layouts/cabinet";
 import Profile from "./pages/profile";
 import { RouterProvider,createBrowserRouter,createRoutesFromElements,Route,Navigate } from 'react-router-dom';
-import Cabinet from "./pages/cabinet";
+// import Cabinet from "./pages/cabinet";
 import LoadingWrapper from "./components/sheard/LoadingWrapper";
 import { getDoc,doc } from "firebase/firestore";
 import { ROUTE_CONSTANTS,FIRESTORE_PATH_NAMES } from './core/utils/constants';
