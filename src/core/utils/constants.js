@@ -4,9 +4,9 @@ export const regexpValidation = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]
         LOGIN:'/login',
         REGISTER:'/register',
         CABINET:'/cabinet',
-        PROFILE:'/profile'
+        PROFILE:'/cabinet/profile'
     };
 
     export const FIRESTORE_PATH_NAMES={
-        REGISTERED_USERS:'/registered_users'
+        REGISTERED_USERS:'registered_users'
     }
