@@ -33,7 +33,7 @@ const App = ()=>{
       setIsAuth(Boolean(user));
     
     })
-})
+},[])
   
   return (
     <AuthContext.Provider value = {{isAuth,userProfileInfo,handleGetUserData}}>

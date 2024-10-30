@@ -94,7 +94,7 @@ const Profile = ()=>{
                 rules={[
                     {
                       required: true,
-                      message: 'Please input your First Name!'
+                      message: 'Please input your Phone Number!'
                     }
                   ]}
                 >
