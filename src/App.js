@@ -10,6 +10,8 @@ import { ROUTE_CONSTANTS,FIRESTORE_PATH_NAMES } from './core/utils/constants';
 import { auth,db} from "./services/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { AuthContext } from "./context/authContext";
+import { Provider } from "react-redux";
+import { store } from "./state-management/store";
 import './styles/global.css'
 
 const App = ()=>{
@@ -36,6 +38,7 @@ const App = ()=>{
 },[])
   
   return (
+    <Provider store = {store}>
     <AuthContext.Provider value = {{isAuth,userProfileInfo,handleGetUserData}}>
     <LoadingWrapper loading={loading}>
   <RouterProvider
@@ -64,6 +67,7 @@ const App = ()=>{
   />
   </LoadingWrapper>
   </AuthContext.Provider>
+  </Provider>
   );
 }
 

@@ -4,10 +4,15 @@ import { db } from '../../services/firebase';
 import { doc,updateDoc } from 'firebase/firestore';
 import { AuthContext } from '../../context/authContext';
 import { FIRESTORE_PATH_NAMES } from '../../core/utils/constants';
+import { useDispatch } from 'react-redux';
+import { increment,decrement } from '../../state-management/slices/userProfile'
+
 import './index.css';
 
 
 const Profile = ()=>{
+    const dispatch = useDispatch();
+
     const { userProfileInfo, handleGetUserData } = useContext(AuthContext);
     const [ form ] = Form.useForm();
     const[buttonLoading,setButtonLoading] = useState(false)
@@ -37,6 +42,13 @@ const Profile = ()=>{
     return(
 
     <div className='form_page_container'>
+         <Button onClick={()=>dispatch(decrement())}>
+            -
+        </Button>
+        <Button onClick={()=>dispatch(increment())}>
+            +
+        </Button>
+        <hr/>
         <Form layout='vertical' form = {form} onFinish={handleEditUserProfile}>
            <Form.Item
             label = 'Profile Image'
@@ -92,7 +104,7 @@ const Profile = ()=>{
                 label = "Phone Number"
                 name = "phoneNumber"
                 rules={[
-                    {
+                    { 
                       required: true,
                       message: 'Please input your Phone Number!'
                     }
