@@ -1,20 +1,68 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
+import { onAuthStateChanged } from "firebase/auth";
+import { db,auth } from '../../../services/firebase';
+import { getDoc,doc } from "firebase/firestore";
+import { FIRESTORE_PATH_NAMES } from "../../../core/utils/constants";
+
 
 const initialState = {
-    count:0,
+    loading:true,
+    authUserInfo:{
+    isAuth:false,
+    userData:{},
+    },
+    error:null
 }
+
+export const fetchUserProfileInfo = createAsyncThunk('data/fetchUserProfileInfo',async()=>{
+    return new Promise((resolve,reject)=>{
+        onAuthStateChanged(auth,(user)=>{
+            if(user){
+                const {uid} = user;
+                const userRef = doc(db,FIRESTORE_PATH_NAMES.REGISTERED_USERS,uid);
+                getDoc(userRef)
+                .then((userData)=>{
+                    if(userData.exists){
+                        resolve(userData.data())
+                    }else{
+                        resolve(null) //Todo
+                    }
+                })
+            } else {
+                reject('oops')
+            }
+        })
+    })
+})
+
+
 
 const userProfileSlice = createSlice({
     name:'userProfile',
     initialState,
     reducers:{
-        increment:state=>{
-            state.count += 1;
-        },
-        decrement:state=>{
-            state.count -= 1;
+        setIsAuth:(state,action)=>{
+            state.authUserInfo.isAuth = action.payload
         }
+    },
+    extraReducers:(promise)=>{
+        promise
+        .addCase(fetchUserProfileInfo.pending,(state)=>{
+            state.loading = true;
+        })
+        .addCase(fetchUserProfileInfo.fulfilled,(state,action)=>{
+            state.loading = false;
+            state.authUserInfo.userData = action.payload;
+            state.authUserInfo.isAuth = true
+        })
+        .addCase(fetchUserProfileInfo.rejected,(state,action)=>{
+            state.loading = false
+            state.authUserInfo.isAuth = false
+            state.error = action.payload;
+            state.authUserInfo.userData = {}
+
+        })
     }
 });
-export const {increment,decrement} = userProfileSlice.actions;
+export const {setIsAuth} = userProfileSlice.actions;
 export default userProfileSlice.reducer;

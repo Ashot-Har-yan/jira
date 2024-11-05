@@ -1,22 +1,19 @@
-import { useContext,useEffect,useState } from 'react';
+import { useEffect,useState } from 'react';
 import { Form , Input, Button,notification,Upload} from 'antd';
 import { db } from '../../services/firebase';
 import { doc,updateDoc } from 'firebase/firestore';
-import { AuthContext } from '../../context/authContext';
 import { FIRESTORE_PATH_NAMES } from '../../core/utils/constants';
-import { useDispatch } from 'react-redux';
-import { increment,decrement } from '../../state-management/slices/userProfile'
-
+import { useDispatch,useSelector } from 'react-redux';
+import { fetchUserProfileInfo } from '../../state-management/slices/userProfile';
 import './index.css';
 
 
 const Profile = ()=>{
     const dispatch = useDispatch();
-
-    const { userProfileInfo, handleGetUserData } = useContext(AuthContext);
+    const {authUserInfo:{userData}} = useSelector((store=>store.userProfile))
     const [ form ] = Form.useForm();
     const[buttonLoading,setButtonLoading] = useState(false)
-    const { uid, ...restData} = userProfileInfo;
+    const { uid, ...restData} = userData;
 
     useEffect(()=>{
         form.setFieldsValue(restData);
@@ -27,7 +24,7 @@ const Profile = ()=>{
         try{
             const userDocRef = doc(db,FIRESTORE_PATH_NAMES.REGISTERED_USERS,uid);
             await updateDoc(userDocRef,values);
-            handleGetUserData(uid);
+            dispatch(fetchUserProfileInfo)
             notification.success({
                 message:'User data successfully updated'
             })
@@ -42,13 +39,6 @@ const Profile = ()=>{
     return(
 
     <div className='form_page_container'>
-         <Button onClick={()=>dispatch(decrement())}>
-            -
-        </Button>
-        <Button onClick={()=>dispatch(increment())}>
-            +
-        </Button>
-        <hr/>
         <Form layout='vertical' form = {form} onFinish={handleEditUserProfile}>
            <Form.Item
             label = 'Profile Image'
@@ -104,7 +94,7 @@ const Profile = ()=>{
                 label = "Phone Number"
                 name = "phoneNumber"
                 rules={[
-                    { 
+                    {
                       required: true,
                       message: 'Please input your Phone Number!'
                     }

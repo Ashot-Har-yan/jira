@@ -5,11 +5,13 @@ import { auth } from '../../../services/firebase';
 import { ROUTE_CONSTANTS } from '../../../core/utils/constants';
 import AuthWrapper from '../../../components/sheard/AuthWrapper';
 import  loginBanner from '../../../core/images/login-auth.jpg'
+import { useDispatch } from 'react-redux';
+import { setIsAuth } from '../../../state-management/slices/userProfile';
 import { Link } from 'react-router-dom';
 
-const Login = ({ setIsAuth }) => {
+const Login = () => {
     const [loading, setLoading] = useState(false);
-  
+    const dispatch = useDispatch();
     const [ form] = Form.useForm();
   
     const handleLogin = async values => {
@@ -18,7 +20,7 @@ const Login = ({ setIsAuth }) => {
         const { email, password } = values;
         await signInWithEmailAndPassword(auth, email, password);
         form.resetFields();
-        setIsAuth(true);
+       dispatch(setIsAuth(true));
   
       }catch (error) {
         notification.error({
