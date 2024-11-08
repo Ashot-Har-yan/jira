@@ -1,10 +1,11 @@
 import { useEffect,useState } from 'react';
-import { Form , Input, Button,notification,Upload} from 'antd';
+import { Form , Input, Button,notification} from 'antd';
 import { db } from '../../services/firebase';
 import { doc,updateDoc } from 'firebase/firestore';
 import { FIRESTORE_PATH_NAMES } from '../../core/utils/constants';
 import { useDispatch,useSelector } from 'react-redux';
 import { fetchUserProfileInfo } from '../../state-management/slices/userProfile';
+import ImgUpload from '../../components/sheard/ImgUpload';
 import './index.css';
 
 
@@ -43,11 +44,8 @@ const Profile = ()=>{
            <Form.Item
             label = 'Profile Image'
             >
-                <Upload
+              <ImgUpload />
 
-                >
-
-                </Upload>
            </Form.Item>
            
             <Form.Item

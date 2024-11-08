@@ -6,8 +6,8 @@ import { ROUTE_CONSTANTS } from '../../../core/utils/constants';
 import AuthWrapper from '../../../components/sheard/AuthWrapper';
 import  loginBanner from '../../../core/images/login-auth.jpg'
 import { useDispatch } from 'react-redux';
-import { setIsAuth } from '../../../state-management/slices/userProfile';
 import { Link } from 'react-router-dom';
+import { fetchUserProfileInfo } from '../../../state-management/slices/userProfile';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ const Login = () => {
         const { email, password } = values;
         await signInWithEmailAndPassword(auth, email, password);
         form.resetFields();
-       dispatch(setIsAuth(true));
+       dispatch(fetchUserProfileInfo());
   
       }catch (error) {
         notification.error({
