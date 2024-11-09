@@ -63,7 +63,7 @@ const handleSignOut = async()=>{
                     }}
                     >
                        <Flex vertical align="center" style = {{padding:token.sizeMS}}>
-                        <Avatar src = 'https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png'/>
+                        <Avatar src = {userProfileInfo.imgUrl}/>
                         <Text>{userProfileInfo.firstName} {userProfileInfo.lastName} </Text>
                         <Text type="secondary" underline>{userProfileInfo.email}</Text>
                         </Flex>
