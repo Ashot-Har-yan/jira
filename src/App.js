@@ -3,6 +3,7 @@ import { Login, Register } from "./pages/auth";
 import MainLayout from "./components/layouts/main";
 import CabinetLayout from "./components/layouts/cabinet";
 import Profile from "./pages/profile";
+import Cabinet from "./pages/cabinet";
 import LoadingWrapper from "./components/sheard/LoadingWrapper";
 import { ROUTE_CONSTANTS } from './core/utils/constants';
 import { RouterProvider,createBrowserRouter,createRoutesFromElements,Route,Navigate } from 'react-router-dom';
@@ -42,6 +43,10 @@ const App = ()=>{
                     path={ROUTE_CONSTANTS.PROFILE}
                     element = {<Profile />}
                      />
+                    <Route 
+                   path={ROUTE_CONSTANTS.CABINET}
+                   element = {<Cabinet />}
+                   />
                    </Route>
                  </Route>
                )

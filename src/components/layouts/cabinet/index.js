@@ -15,6 +15,7 @@ const menuItems = [
     }
 ]
 
+
 const CabinetLayout = ()=>{
     const navigate = useNavigate();
     const {pathname} = useLocation();
