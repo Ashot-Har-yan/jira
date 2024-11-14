@@ -1,7 +1,9 @@
 import {
     BugOutlined,
     FlagOutlined,
-    CheckSquareOutlined
+    CheckSquareOutlined,
+    ArrowUpOutlined,
+    ArrowDownOutlined 
 } from '@ant-design/icons';
 
 
@@ -42,21 +44,27 @@ export const ISSUE_PRIORITY_OPTIONS = {
     [ISSUE_PRIORITY.HIGHEST]:{
         label:'Highest',
         value:ISSUE_PRIORITY.HIGHEST,
+        icon:<ArrowUpOutlined style={{color:'#8B0000'}} />
     },
     [ISSUE_PRIORITY.HIGH]:{
         label:'High',
-        value:ISSUE_PRIORITY.HIGH
+        value:ISSUE_PRIORITY.HIGH,
+        icon:<ArrowUpOutlined style={{color:'#FF0000'}} />
     },
     [ISSUE_PRIORITY.LOWEST]:{
         label:'Lowest',
-        value:ISSUE_PRIORITY.LOWEST
+        value:ISSUE_PRIORITY.LOWEST,
+        icon:<ArrowDownOutlined style={{color:'#008000'}} />
+
     },
     [ISSUE_PRIORITY.LOW]:{
         label:'Low',
-        value:ISSUE_PRIORITY.LOW
+        value:ISSUE_PRIORITY.LOW,
+        icon:<ArrowDownOutlined style={{color:'#32CD32'}} />
     },
     [ISSUE_PRIORITY.MEDIUM]:{
         label:'Medium',
-        value:ISSUE_PRIORITY.MEDIUM
+        value:ISSUE_PRIORITY.MEDIUM,
+        icon:<ArrowUpOutlined style={{color:'#FFA500'}} />
     },
 }
