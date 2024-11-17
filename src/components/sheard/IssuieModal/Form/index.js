@@ -1,7 +1,9 @@
 import { Form,Input,Select,Space } from "antd"
 import { ISSUE_OPTIONS, ISSUE_PRIORITY_OPTIONS } from "../../../../core/utils/issues"
+import Editor from "../../Editor";
 
 const ModalForm = ({form,onFinish})=>{
+
     return(
         <Form layout="vertical" form = {form} onFinish={onFinish}>
             <Form.Item
@@ -41,13 +43,27 @@ const ModalForm = ({form,onFinish})=>{
                     }
                 </Select>
             </Form.Item>
+
             <Form.Item 
-                name= 'priority'
-                label = 'Issue Priority'
+                name= 'description'
+                label = 'Description'
                 rules={[
                     {
                       required: true,
-                      message: 'Please select Issue Priority!'
+                      message: 'Please input Issue Description!'
+                    }
+                  ]}
+            >
+               <Editor />
+                </Form.Item>
+
+                <Form.Item 
+                name= 'priority'
+                label = 'Priority'
+                rules={[
+                    {
+                      required: true,
+                      message: 'Please select Priority!'
                     }
                   ]}
             >
@@ -68,6 +84,6 @@ const ModalForm = ({form,onFinish})=>{
             </Form.Item>
         </Form>
     )
-}
+};
  
 export default ModalForm

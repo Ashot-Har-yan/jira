@@ -1,12 +1,38 @@
-import { Modal,Form } from "antd";
+import { Modal,Form,notification } from "antd";
 import { useState } from "react";
 import ModalForm from "../Form";
+import { doc,setDoc} from 'firebase/firestore';
+import { db } from '../../../../services/firebase';
+import { FIRESTORE_PATH_NAMES } from "../../../../core/utils/constants";
+import { generateUid } from "../../../../core/helpers/generateUid";
 
 const AddIssueModal = ({isOpen,onClose})=>{
     const [form] = Form.useForm();
     const [buttonLoading,setButtonLoading] = useState(false);
-    const handleCreateIssue = (values)=>{
-        console.log(values);
+    const handleCreateIssue = async(values)=>{
+        setButtonLoading(true)
+        const taskId = generateUid()
+
+        const taskModal = {
+            taskId,
+            ...values,
+            date:new Date().toLocaleDateString()
+        }
+        try{
+            const createDoc = doc(db,FIRESTORE_PATH_NAMES.ISSUES,taskId)
+            await setDoc(createDoc,taskModal)
+            onClose();
+            form.resetFields();
+            notification.success({
+                message:'Your task me been created '
+            })
+        }catch{
+            notification.error({
+                message:'Error Ops'
+            })
+        }finally{
+            setButtonLoading(false)
+        }
     }
     const handleClose = ()=>{
         onClose();
