@@ -47,6 +47,13 @@ export const taskStatuses = {
         },
 
     }
+    
+// export const TASK_STATUS_TYPE = {
+//     TODO:0,
+//     IN_PROGRESS:1,
+//     TEST:2,
+//     DONE:3
+// }
 
 export const ISSUE_OPTIONS = {
    [ ISSUE_TYPES.BUG]:{

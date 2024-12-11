@@ -11,5 +11,5 @@ export const transformIssueData = (data)=>{
         container[item.status].push(item) 
     }
    })
-   console.log(container)
+   return container
 }
