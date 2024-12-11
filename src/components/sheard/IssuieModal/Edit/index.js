@@ -15,7 +15,7 @@ const EditIssueModal = ({isOpen,onClose,data})=>{
     const handleEditIsuue = async(formData)=>{
         setButtonLoading(true)
        try{
-        const{taskId} = data
+        const {taskId} = data
         const issueDocRef = doc(db,FIRESTORE_PATH_NAMES.ISSUES,taskId)
         await updateDoc(issueDocRef,formData);
         notification.success({

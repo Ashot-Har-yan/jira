@@ -28,6 +28,26 @@ export const COLOR_TYPES = {
     BLUE:'#4fade6'
 }
 
+export const taskStatuses = {
+    TODO:{
+        key:0,
+        title:'Todo'
+    },
+            IN_PROGRESS:{
+            key:1,
+            title:'In Progress'
+        },
+            TEST:{
+            key:2,
+            title:'Test'
+        },
+            DONE:{
+            key:3,
+            title:'Done'
+        },
+
+    }
+
 export const ISSUE_OPTIONS = {
    [ ISSUE_TYPES.BUG]:{
     label:'Bug',

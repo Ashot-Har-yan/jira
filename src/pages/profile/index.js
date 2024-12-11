@@ -9,7 +9,6 @@ import { getDownloadURL,ref,uploadBytesResumable } from 'firebase/storage';
 import { setProfileImgUrl } from '../../state-management/slices/userProfile';
 import './index.css';
 
-
 const Profile = () => {
   const dispatch = useDispatch();
   const { authUserInfo: { userData } } = useSelector((store) => store.userProfile);

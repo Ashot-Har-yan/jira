@@ -7,6 +7,7 @@ import { FIRESTORE_PATH_NAMES } from "../../../../core/utils/constants";
 import { generateUid } from "../../../../core/helpers/generateUid";
 import { useDispatch } from "react-redux";
 import { fetchIssueData } from "../../../../state-management/slices/issues";
+import { taskStatuses } from "../../../../core/utils/issues";
 
 const AddIssueModal = ({isOpen,onClose})=>{
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const AddIssueModal = ({isOpen,onClose})=>{
         const taskModal = {
             taskId,
             ...values,
+            status:taskStatuses.TODO.key,
             date:new Date().toLocaleDateString()
         }
         try{
