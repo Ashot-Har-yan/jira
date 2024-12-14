@@ -1,14 +1,19 @@
-import { Button,Typography } from "antd";
+import { Button,Typography,Flex } from "antd";
 import { useState,useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
 import AddIssueModal from "../../components/sheard/IssuieModal/Add";
 import EditIssueModal from "../../components/sheard/IssuieModal/Edit";
-import { fetchIssueData } from "../../state-management/slices/issues";
+import { useSelector,useDispatch } from "react-redux";
+import { fetchIssueData,changeIssueColumns } from "../../state-management/slices/issues";
 import LoadingWrapper from "../../components/sheard/LoadingWrapper";
 import { DragDropContext,Draggable,Droppable } from 'react-beautiful-dnd';
+import { ISSUE_OPTIONS } from "../../core/utils/issues";
+import { db } from "../../services/firebase";
+import { updateDoc,doc } from "firebase/firestore";
+import { FIRESTORE_PATH_NAMES } from "../../core/utils/constants";
+import { taskStatuses } from "../../core/utils/issues";
 import './index.css';
 
-const {Title} = Typography;
+const {Title,Text} = Typography;
 
 const Cabinet=()=>{
     const dispatch = useDispatch();
@@ -26,6 +31,21 @@ const Cabinet=()=>{
     const handleClose = ()=>{
         setShowModal(false)
     }
+    const handleChangeTaskStatus = async(result)=>{
+        if(result.destination){
+            const {source,destination} = result;
+            try{
+                dispatch(changeIssueColumns({source,destination}));
+                const docRef = doc(db,FIRESTORE_PATH_NAMES.ISSUES,result.draggableId)
+                await updateDoc(docRef,{
+                    status:destination.droppableId
+            })
+            }catch{
+                console.log('Error Drag')
+            }
+        }
+    }
+
     return(
         <div>
            <Button  type="primary" onClick={handleOpenModal}>
@@ -45,14 +65,14 @@ const Cabinet=()=>{
 
            <div className="drag_context_container">
                 <LoadingWrapper loading={isLoading}>
-                    <DragDropContext>
+                    <DragDropContext onDragEnd={handleChangeTaskStatus}>
                     {
                         Object.entries(data).map(([columnId,column])=>{
                             return(
                                 <div className="column_container" key = {columnId}>
                                     <div className="column_header">
                                         <Title level={5} type="secondary">
-                                    {columnId}
+                                   {taskStatuses[columnId].title}
                                         {' '}
                                     ({column.length})
                                         </Title>
@@ -84,10 +104,18 @@ const Cabinet=()=>{
                                                                     ref = {provided.innerRef}
                                                                     {...provided.draggableProps}
                                                                     {...provided.dragHandleProps}
+                                                                    onClick={()=>setEditModalData(item)}
                                                                     >
-                                                                        Task
+                                                                        <Flex justify='space-between'>
+                                                                        <Text>
+                                                                        {item.issueName}
+                                                                        </Text>
+                                                                        <div>
+                                                                               {ISSUE_OPTIONS[item.type]?.icon}
+                                                                        </div>
+                                                                        </Flex>
                                                                 </div>
-                                                            )
+                                                            )                                            
                                                         }
                                                         }
                                                     </Draggable>

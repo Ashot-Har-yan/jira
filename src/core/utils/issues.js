@@ -30,30 +30,23 @@ export const COLOR_TYPES = {
 
 export const taskStatuses = {
     TODO:{
-        key:0,
+        key:'TODO',
         title:'Todo'
     },
             IN_PROGRESS:{
-            key:1,
+            key:'IN_PROGRESS',
             title:'In Progress'
         },
             TEST:{
-            key:2,
+            key:'TEST',
             title:'Test'
         },
             DONE:{
-            key:3,
+            key:'DONE',
             title:'Done'
         },
 
     }
-    
-// export const TASK_STATUS_TYPE = {
-//     TODO:0,
-//     IN_PROGRESS:1,
-//     TEST:2,
-//     DONE:3
-// }
 
 export const ISSUE_OPTIONS = {
    [ ISSUE_TYPES.BUG]:{
