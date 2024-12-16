@@ -38,7 +38,8 @@ const Cabinet=()=>{
                 dispatch(changeIssueColumns({source,destination}));
                 const docRef = doc(db,FIRESTORE_PATH_NAMES.ISSUES,result.draggableId)
                 await updateDoc(docRef,{
-                    status:destination.droppableId
+                    status:destination.droppableId,
+                    index:destination.index
             })
             }catch{
                 console.log('Error Drag')
